@@ -8,13 +8,44 @@ var charLower = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'
 var charSpecial = ['#', '$', '%', '&', '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@'];
 var charNumber = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-// Write password to the #password input
-function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
+// Confirm requirements from user
+function generatePassword() {
 
-  passwordText.value = password;
+  var length = parseInt(prompt("How many characters (8-128) would you like your password to contain?"));
+
+  if (length < 8) {
+    alert('The password must be at least 8 characters!');
+    return;
+  }
+
+  if (length > 128) {
+    alert('The password must be less than 128 characters!');
+    return;
+  }
+
+  var confirmUppercase = confirm("Do you want to include uppercase characters?")
+  var confirmLowercase = confirm("Do you want to include lowercase characters?");
+  var confirmSpecial = confirm("Do you want to include special characters?");
+  var confirmNumbers = confirm("Do you want to include numeric characters?");
+
+  if (!confirmLowercase && !confrimUppercase && !confirmNumeric && !confirmSpecial) {
+    alert("Your password must contain at least one special, numeric, lowercase, or uppercase character");
+    return;
+  }
+
+  var questionOptions = {
+    length: length,
+    specialCharacters: confirmSpecial,
+    numeric: confirmNumbers,
+    lowerCase: confirmLowercase,  
+    upperCase: confirmUppercase
+  }
+  return questionOptions;
+
 }
+var options = generatePassword();
+    console.log(options)
 
+    
 // Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+generateBtn.addEventListener("click", generatePassword);
