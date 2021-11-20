@@ -8,11 +8,12 @@ var charLower = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'
 var charSpecial = ['#', '$', '%', '&', '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@'];
 var charNumber = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 var userPassword = ""
+
 // Confirm requirements from user
 function generatePassword() {
   var passwordPool = [];
 
-
+// The user is prompted for a password length, if it is less than 8 or more than 128 the user is alerted that the password does not meet requirements 
   var passwordLength = parseInt(prompt("How many characters (8-128) would you like your password to contain?"));
 
   if (passwordLength < 8) {
@@ -24,6 +25,8 @@ function generatePassword() {
     alert('The password must be less than 128 characters!');
     return;
   }
+
+// Each of these blocks of code prompts the user to include one of the four character pools, upon confirming a character from the given pool is added to the password and the character pool is added to the overall passwordPool array
 
   var confirmUppercase = confirm("Do you want to include uppercase characters?");
   if (confirmUppercase === true) {
@@ -50,17 +53,24 @@ function generatePassword() {
     userPassword = userPassword + charNumber[Math.floor(Math.random() * charNumber.length)];
   }
 
+  // if any of the character pools are omited the password is not generated
+
   if (!confirmLowercase || !confirmUppercase || !confirmNumbers || !confirmSpecial) {
     alert("Your password must contain at least one special, numeric, lowercase, or uppercase character");
     return;
   }
 
+  // The for loop that will build the remaining password
 
   for (var i = 4; i < passwordLength; i++) {
     userPassword = userPassword + passwordPool[Math.floor(Math.random() * passwordPool.length)];
     console.log(userPassword);
+
+    // this line displays the userPassword in the text box
+    document.querySelector("#password").placeholder= userPassword;
   }
 
+  // This was for me to keep track of what my function was making as I went. I offers nothing to the application itself, but data is beautiful.
   var questionOptions = {
     passwordLength: passwordLength,
     specialCharacters: confirmSpecial,
@@ -71,6 +81,7 @@ function generatePassword() {
   console.log(userPassword);
   console.log(questionOptions);
 
+  
 }
 
 
